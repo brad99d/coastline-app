@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!-- mapbox -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.js"></script>
+    <!-- chartjs -->
+    <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js "></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="map"></div>
+    <div id="map-overlay">
+        <div class="navbar-container">
+            <div class="navbar">
+                <div class="container-fluid">
+                    <a class="navbar-brand mb-0 ms-1 h1 text-light" href="#">Coastal Insights</a>
+                    <div class="navbar-links">
+                        <button class="btn btn-link link-dark" style="text-decoration: none;"><i class="bi bi-info-circle"></i> Learn More</button>
+                        <button class="btn btn-link link-dark" style="text-decoration: none;"><i class="bi bi-person-circle"></i> Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="controls">
+                <div class="insight-container">
+                    <div class="insight-title">
+                        <div class="insight-year">2024</div>
+                        <div class="insight-heading">Historical Data</div>
+                    </div>
+                    <div class="card" data-bs-toggle="modal" data-bs-target="#modal">
+                        <div class="card-header">
+                            Baseline Temperature
+                            <span class="value">+0.8°C</span>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="chart-temp"></canvas>
+                        </div>
+                    </div>
+                    <div class="card" data-bs-toggle="modal" data-bs-target="#modal">
+                        <div class="card-header">
+                            Shoreline Change
+                            <span class="value">-1.2%</span>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="chart-shore"></canvas>
+                        </div>
+                    </div>
+                    <div class="card" data-bs-toggle="modal" data-bs-target="#modal">
+                        <div class="card-header">
+                            Erosion Rate
+                            <span class="value">+0.6</span>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="chart-erosion"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <i class="bi bi-caret-left-fill"></i>
+                        <i class="bi bi-dot"></i>
+                        <i class="bi bi-dot"></i>
+                        <i class="bi bi-dot"></i>
+                        <i class="bi bi-dot"></i>
+                        <i class="bi bi-dot"></i>
+                        <span class="timeline-label">2024</span>
+                        <i class="bi bi-dot"></i>
+                        <i class="bi bi-dot"></i>
+                        <i class="bi bi-dot"></i>
+                        <i class="bi bi-dot"></i>
+                        <i class="bi bi-dot"></i>
+                        <i class="bi bi-caret-right-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span class="value">+0.8°C</span>
+        <canvas id="chart-detail"></canvas>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-bell-fill"></i> Set Alert</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <!-- custom script -->
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
