@@ -22,4 +22,4 @@ COPY . .
 EXPOSE 8000
 
 # run django dev server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "app.wsgi:application", "-b", "0.0.0.0:8000"]

@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-liw*ml(p$#luu+5pe@3v$#oqaihhgzt%jw%6w7m9&ru)oy%gc#
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    "localhost",
     "backend",
 ]
 
@@ -39,8 +40,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third-party
     'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
+    # first-party
+    'users'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -88,6 +104,9 @@ DATABASES = {
     }
 }
 
+
+# User Model
+AUTH_USER_MODEL = 'users.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

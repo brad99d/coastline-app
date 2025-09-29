@@ -1,5 +1,5 @@
 services:
-  backend:
+  api:
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -14,7 +14,7 @@ services:
     env_file:
       - .env
 
-  frontend:
+  web:
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -28,6 +28,8 @@ services:
       - webnet
     environment:
       - NODE_ENV=development
+    env_file:
+      - .env
     command: npm run dev
 
 networks:
