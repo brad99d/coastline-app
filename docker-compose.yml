@@ -9,8 +9,11 @@ services:
       - ./backend:/app
     ports:
       - "8000:8000"
+    networks:
+      - webnet
     env_file:
       - .env
+
   frontend:
     build:
       context: ./frontend
@@ -21,6 +24,11 @@ services:
       - /app/node_modules
     ports:
       - "3000:3000"
+    networks:
+      - webnet
     environment:
       - NODE_ENV=development
     command: npm run dev
+
+networks:
+  webnet:
