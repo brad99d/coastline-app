@@ -1,0 +1,27 @@
+// context/TimeRangeContext.tsx
+
+"use client";
+import { createContext, useContext, useState, ReactNode } from "react";
+import { YearRange } from "../types/stat";
+
+interface TimeRangeContextType {
+    range: YearRange;
+    setRange: (r: YearRange) => void;
+}
+
+const TimeRangeContext = createContext<TimeRangeContextType | undefined>(undefined);
+
+export function TimeRangeProvider({ children }: { children: ReactNode }) {
+    const [range, setRange] = useState<YearRange>({ start: 2019, end: 2024 });
+    return (
+        <TimeRangeContext.Provider value={{ range, setRange }}>
+            {children}
+        </TimeRangeContext.Provider>
+    );
+}
+
+export function useTimeRange(): TimeRangeContextType {
+    const ctx = useContext(TimeRangeContext);
+    if (!ctx) throw new Error("useTimeRange must be used within TimeRangeProvider");
+    return ctx;
+}
