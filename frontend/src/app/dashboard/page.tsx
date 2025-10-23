@@ -13,7 +13,7 @@ export default function Page() {
     const [data, setData] = useState<Stat[]>([]);
 
     useEffect(() => {
-        fetchStats(range).then((res) => setData(res.values));
+        fetchStats(range).then((res) => setData(res));
     }, [range]);
 
     return (

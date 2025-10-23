@@ -2,7 +2,7 @@
 
 export interface Stat {
     year: number;
-    value: number;
+    temperature: number;
 }
 
 export interface YearRange {
