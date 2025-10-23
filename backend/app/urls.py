@@ -19,11 +19,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
+from app.api_router import router
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path("", include("dashboard.urls")),
-    path("api/v1/", include("app.api_router")),
+    path("api/v1/", include(router.urls)),
     path("api/v1/token-auth/", obtain_auth_token),
     path('admin/', admin.site.urls),
 ]
