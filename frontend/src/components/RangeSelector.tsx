@@ -15,9 +15,11 @@ export default function RangeSelector({
     maxYear = 2030,
 }: RangeSelectorProps) {
     const { range, setRange } = useTimeRange();
-    const [dragging, setDragging] = useState<"none" | "start" | "end" | "range">("none");
+    const [dragging, setDragging] = useState<"none" | "start" | "end" | "range" | "single" | "create">("none");
     const trackRef = useRef<HTMLDivElement>(null);
+    const [anchorYear, setAnchorYear] = useState<number | null>(null);
     const totalYears = maxYear - minYear;
+    const singleThreshold = 1;
 
     const yearToPercent = (y: number) => ((y - minYear) / totalYears) * 100;
 
@@ -28,19 +30,39 @@ export default function RangeSelector({
         return Math.round(minYear + ratio * totalYears);
     };
 
+    const isSingle = range.start === range.end;
+
     const onMouseDown = (
         e: React.MouseEvent,
-        type: "start" | "end" | "range"
+        type: "start" | "end" | "range" | "track"
     ) => {
         e.preventDefault();
-        setDragging(type);
+        const year = posToYear(e.clientX);
+        setAnchorYear(year);
+        if (type === "track") {
+            // create a range
+            setRange({ start: year, end: year });
+            setDragging("create");
+        } else if (isSingle) {
+            setDragging("single");
+        } else {
+            setDragging(type);
+        }
     };
 
     const onMouseMove = (e: MouseEvent) => {
-        if (dragging === "none" || !trackRef.current) return;
+        if (dragging === "none" || !trackRef.current || anchorYear == null) return;
         const year = posToYear(e.clientX);
 
-        if (dragging === "start") {
+        if (dragging === "single") {
+            const clamped = Math.min(Math.max(year, minYear), maxYear);
+            setRange({ start: clamped, end: clamped });
+        } else if (dragging === "create") {
+            setRange({
+                start: Math.min(anchorYear, year),
+                end: Math.max(anchorYear, year),
+            });
+        } else if (dragging === "start") {
             setRange({
                 start: Math.min(year, range.end),
                 end: range.end,
@@ -68,7 +90,10 @@ export default function RangeSelector({
         }
     };
 
-    const onMouseUp = () => setDragging("none");
+    const onMouseUp = () => {
+        setDragging("none");
+        setAnchorYear(null);
+    };
 
     useEffect(() => {
         window.addEventListener("mousemove", onMouseMove);
@@ -82,6 +107,10 @@ export default function RangeSelector({
     return (
         <div className="glass fixed bottom-0 left-0 right-0 max-w-full bg-white rounded-[22px] m-4">
             <div className="max-w-full mx-[22px] select-none">
+                <div
+                    className="absolute left-0 right-0 h-full w-full z-2"
+                    onMouseDown={(e) => onMouseDown(e, "track")}
+                ></div>
                 <div ref={trackRef} className="relative h-17 mt-0">
                     {/* Track */}
                     <div className="relative z-10 drop-shadow-xl">
@@ -91,22 +120,26 @@ export default function RangeSelector({
                                  left: `${yearToPercent(range.start)}%`,
                                  width: `${yearToPercent(range.end) - yearToPercent(range.start)}%`,
                              }}
-                             onMouseDown={(e) => onMouseDown(e, "range")}
+                             onMouseDown={(e) =>
+                                 isSingle ? onMouseDown(e, "start") : onMouseDown(e, "range")
+                             }
                         ></div>
 
                         {/* Start handle */}
                         <div
-                            className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2 cursor-pointer transition-transform"
+                            className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2 cursor-pointer"
                             style={{ left: `${yearToPercent(range.start)}%` }}
                             onMouseDown={(e) => onMouseDown(e, "start")}
                         ></div>
 
                         {/* End handle */}
-                        <div
-                            className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2 cursor-pointer transition-transform"
-                            style={{ left: `${yearToPercent(range.end)}%` }}
-                            onMouseDown={(e) => onMouseDown(e, "end")}
-                        ></div>
+                        {!isSingle && (
+                            <div
+                                className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2 cursor-pointer"
+                                style={{ left: `${yearToPercent(range.end)}%` }}
+                                onMouseDown={(e) => onMouseDown(e, "end")}
+                            ></div>
+                        )}
                     </div>
 
                     {/* Notches */}
