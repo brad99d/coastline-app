@@ -18,7 +18,7 @@ export default function Page() {
     }, [range]);
 
     return (
-        <main>
+        <main className="bg-cover min-h-screen m-0 p-0 top-0" style={{ backgroundImage: "url('/images/ariungoo-batzorig-xWRo5J3xQH8-unsplash.jpg')" }}>
             <RangeSelector />
             <TimeControls />
             <Chart data={data} />
