@@ -7,6 +7,7 @@ import { useTimeRange } from "@/context/TimeRangeContext";
 import { fetchStats } from "@/lib/api/stats";
 import TimeControls from "@/components/TimeControls";
 import Chart from "@/components/Chart";
+import RangeSelector from "@/components/RangeSelector";
 
 export default function Page() {
     const { range } = useTimeRange();
@@ -18,8 +19,10 @@ export default function Page() {
 
     return (
         <main>
+            <RangeSelector />
             <TimeControls />
             <Chart data={data} />
+
         </main>
     );
 }
