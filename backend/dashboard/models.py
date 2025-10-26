@@ -9,3 +9,10 @@ class Temperature(models.Model):
 
     def __str__(self):
         return f"{self.year}: {self.temperature}"
+
+class SeaLevel(models.Model):
+    year = models.IntegerField(unique=True)
+    level = models.FloatField()
+
+    def __str__(self):
+        return f"{self.year}: {self.level}"

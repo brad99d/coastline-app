@@ -1,4 +1,4 @@
-// components/BarChartCard.tsx
+// components/TemperatureChartCard.tsx
 
 "use client";
 import {
@@ -14,7 +14,7 @@ import { DataCard } from "@/components/DataCard";
 import { useTimeRange } from "@/context/TimeRangeContext";
 import { Stat } from "@/types/stat";
 
-export default function BarChartCard({ title, data }: { title: string; data: Stat[]}) {
+export default function TemperatureChartCard({ title, unit, data }: { title: string; unit: string; data: Stat[]}) {
     const { range } = useTimeRange();
 
     // build dataset
@@ -31,7 +31,7 @@ export default function BarChartCard({ title, data }: { title: string; data: Sta
     );
 
     return (
-        <DataCard title={title}>
+        <DataCard title={title} unit={unit}>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData}>
                     <CartesianGrid strokeDasharray="1 0" vertical={false} />
