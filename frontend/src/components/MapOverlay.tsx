@@ -3,11 +3,13 @@
 
 import RangeSelector from "@/components/RangeSelector";
 import TimeControls from "@/components/TimeControls";
-import Chart from "@/components/Chart";
 import {useTimeRange} from "@/context/TimeRangeContext";
 import {useEffect, useState} from "react";
 import {Stat} from "@/types/stat";
 import {fetchStats} from "@/lib/api/stats";
+import BarChartCard from "@/components/BarChartCard";
+import Chart from "@/components/Chart";
+import {Sidebar} from "@/components/Sidebar";
 
 export default function MapOverlay() {
     const { range } = useTimeRange();
@@ -19,9 +21,12 @@ export default function MapOverlay() {
 
     return (
         <div className="map-overlay absolute top-0 bottom-0 w-full">
+            <Sidebar>
+                <BarChartCard title={"Global Temperature"} data={data} />
+                <BarChartCard title={"Global Temperature"} data={data} />
+                <BarChartCard title={"Global Temperature"} data={data} />
+            </Sidebar>
             <RangeSelector />
-            <TimeControls />
-            <Chart data={data} />
         </div>
     )
 }

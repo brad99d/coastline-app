@@ -134,7 +134,7 @@ export default function RangeSelector({
 
                         {/* Start handle */}
                         <div
-                            className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2 cursor-pointer"
+                            className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2 cursor-grab"
                             style={{ left: `${yearToPercent(range.start)}%` }}
                             onMouseDown={(e) => onMouseDown(e, "start")}
                         ></div>
@@ -142,7 +142,7 @@ export default function RangeSelector({
                         {/* End handle */}
                         {!isSingle && (
                             <div
-                                className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2 cursor-pointer"
+                                className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2 cursor-grab"
                                 style={{ left: `${yearToPercent(range.end)}%` }}
                                 onMouseDown={(e) => onMouseDown(e, "end")}
                             ></div>
