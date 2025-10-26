@@ -1,4 +1,19 @@
 services:
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: database
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - webnet
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+
   api:
     build:
       context: ./backend
@@ -13,6 +28,10 @@ services:
       - webnet
     env_file:
       - .env
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgis://postgres:postgres@db:5432/db
 
   web:
     build:
@@ -31,6 +50,9 @@ services:
     env_file:
       - .env
     command: npm run dev
+
+volumes:
+  postgis_data:
 
 networks:
   webnet:
