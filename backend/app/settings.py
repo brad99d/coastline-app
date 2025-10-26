@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # third-party
     'corsheaders',
     'rest_framework',
+    'rest_framework_gis',
     'rest_framework.authtoken',
     'django.contrib.gis',
     # first-party
@@ -58,7 +59,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ]
+    ],
 }
 
 MIDDLEWARE = [
