@@ -2,11 +2,10 @@
 
 from rest_framework.routers import DefaultRouter
 from users.views import UserViewSet
-from dashboard.views import TemperatureViewSet, CoastlineViewSet
+from dashboard.views import TemperatureViewSet
 
 router = DefaultRouter()
 router.register(r"users", UserViewSet)
 router.register(r"temperature", TemperatureViewSet, basename="temperature")
-router.register(r"coastline", CoastlineViewSet, basename="coastline")
 
 urlpatterns = router.urls

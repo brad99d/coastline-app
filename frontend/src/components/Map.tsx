@@ -22,19 +22,19 @@ export default function Map() {
         });
 
         m.on("load", () => {
-            m.addSource("coastlines", {
-                type: "geojson",
-                data: `/api/coastline` // ?in_bbox=minx,miny,maxx,maxy
+            m.addSource("coastline", {
+                type: "vector",
+                tiles: ['http://localhost:8080/data/coastline/{z}/{x}/{y}.pbf'],
+                minzoom: 0,
+                maxzoom: 14,
             });
 
             m.addLayer({
-                id: "coastlines-layer",
+                id: "coastline",
                 type: "line",
-                source: "coastlines",
-                paint: {
-                    "line-color": "#ffffff",
-                    "line-width": 1.0,
-                },
+                source: "coastline",
+                'source-layer': 'coastline',
+                paint: { 'line-color': '#0055ff', 'line-width': 1 },
             });
         });
 

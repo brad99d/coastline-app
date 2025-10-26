@@ -10,9 +10,6 @@ ENV PYTHONUNBUFFERED=1
 RUN apt-get update && apt-get install -y \
     build-essential libpq-dev curl
 
-# install GDAL
-RUN apt-get install -y binutils libproj-dev gdal-bin postgresql-client
-
 # remove apt lists
 RUN rm -rf /var/lib/apt/lists/*
 

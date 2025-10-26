@@ -44,9 +44,7 @@ INSTALLED_APPS = [
     # third-party
     'corsheaders',
     'rest_framework',
-    'rest_framework_gis',
     'rest_framework.authtoken',
-    'django.contrib.gis',
     # first-party
     'dashboard',
     'users'
@@ -103,12 +101,8 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'db',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
