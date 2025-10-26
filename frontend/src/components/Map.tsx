@@ -4,10 +4,12 @@
 import { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { useTimeRange } from "@/context/TimeRangeContext";
 
 export default function Map() {
     const mapContainer = useRef<HTMLDivElement>(null);
     const map = useRef<mapboxgl.Map | null>(null);
+    const { range } = useTimeRange();
 
     useEffect(() => {
         if (map.current) return;
@@ -34,12 +36,46 @@ export default function Map() {
                 type: "line",
                 source: "coastline",
                 'source-layer': 'coastline',
-                paint: { 'line-color': '#0055ff', 'line-width': 1 },
+                paint: { 'line-color': '#0055FF', 'line-width': 1 },
+                layout: {
+                    'line-sort-key': ['get', 'year']
+                }
             });
+
+            m.setFilter("coastline", [
+                "all",
+                [">=", ["get", "year"], range.start],
+                ["<=", ["get", "year"], range.end],
+            ]);
         });
 
         map.current = m;
     }, []);
+
+    // show only selected range
+    useEffect(() => {
+        if (!map.current || !map.current.isStyleLoaded()) return;
+        const m = map.current;
+
+        const gradient =
+            range.start === range.end
+                ? '#0055FF'
+                : [
+            'interpolate',
+            ['linear'],
+            ['get', 'year'],
+            range.start, '#99CCFF',
+            range.end, '#0055FF'
+        ];
+
+        m.setPaintProperty('coastline', 'line-color', gradient);
+
+        m.setFilter("coastline", [
+            "all",
+            [">=", ["get", "year"], range.start],
+            ["<=", ["get", "year"], range.end],
+        ]);
+    }, [range]);
 
     return <div ref={mapContainer} className="absolute top-0 left-0 w-full h-screen z-0" />;
 }
