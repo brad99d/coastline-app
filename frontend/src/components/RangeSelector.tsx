@@ -16,6 +16,7 @@ export default function RangeSelector({
 }: RangeSelectorProps) {
     const { range, setRange } = useTimeRange();
     const [dragging, setDragging] = useState<"none" | "start" | "end" | "range" | "single" | "create">("none");
+    const [rangeGrabOffset, setRangeGrabOffset] = useState<number | null>(null);
     const trackRef = useRef<HTMLDivElement>(null);
     const [anchorYear, setAnchorYear] = useState<number | null>(null);
     const totalYears = maxYear - minYear;
@@ -45,6 +46,10 @@ export default function RangeSelector({
             setDragging("create");
         } else if (isSingle) {
             setDragging("single");
+        } else if (type === "range") {
+            const year = posToYear(e.clientX);
+            setRangeGrabOffset(year - range.start);
+            setDragging("range");
         } else {
             setDragging(type);
         }
@@ -72,10 +77,11 @@ export default function RangeSelector({
                 start: range.start,
                 end: Math.max(year, range.start),
             });
-        } else if (dragging === "range") {
+        } else if (dragging === "range" && rangeGrabOffset != null) {
+            const year = posToYear(e.clientX);
             const width = range.end - range.start;
-            let start = year - width / 2;
-            let end = year + width / 2;
+            let start = year - rangeGrabOffset;
+            let end = start + width;
             if (start < minYear) {
                 start = minYear;
                 end = start + width;
@@ -93,6 +99,7 @@ export default function RangeSelector({
     const onMouseUp = () => {
         setDragging("none");
         setAnchorYear(null);
+        setRangeGrabOffset(null);
     };
 
     useEffect(() => {
