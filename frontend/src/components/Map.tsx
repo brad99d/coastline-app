@@ -36,7 +36,7 @@ export default function Map() {
                 type: "line",
                 source: "coastline",
                 'source-layer': 'coastline',
-                paint: { 'line-color': '#0055FF', 'line-width': 1 },
+                paint: { 'line-color': 'hsl(180, 80%, 80%)', 'line-width': 2 },
                 layout: {
                     'line-sort-key': ['get', 'year']
                 }
@@ -59,13 +59,13 @@ export default function Map() {
 
         const gradient =
             range.start === range.end
-                ? '#0055FF'
+                ? 'hsl(180, 80%, 80%)'
                 : [
             'interpolate',
             ['linear'],
             ['get', 'year'],
-            range.start, '#99CCFF',
-            range.end, '#0055FF'
+            range.start, 'hsl(220, 100%, 20%)',
+            range.end, 'hsl(180, 80%, 80%)'
         ];
 
         m.setPaintProperty('coastline', 'line-color', gradient);
