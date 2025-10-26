@@ -12,7 +12,7 @@ interface TimeRangeContextType {
 const TimeRangeContext = createContext<TimeRangeContextType | undefined>(undefined);
 
 export function TimeRangeProvider({ children }: { children: ReactNode }) {
-    const [range, setRange] = useState<YearRange>({ start: 2019, end: 2024 });
+    const [range, setRange] = useState<YearRange>({ start: 2024, end: 2024 });
     return (
         <TimeRangeContext.Provider value={{ range, setRange }}>
             {children}
