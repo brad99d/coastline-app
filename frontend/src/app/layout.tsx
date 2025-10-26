@@ -1,11 +1,11 @@
 import { JSX } from "react";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TimeRangeProvider } from "@/context/TimeRangeContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const geistSans = IBM_Plex_Sans({
+  variable: "--font-ibm-plex-sans",
   subsets: ["latin"],
 });
 

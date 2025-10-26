@@ -212,3 +212,4 @@ __marimo__/
 # Jetbrains
 /backend/.idea
 /frontend/.idea
+backend/data/coastlines_3-0-0.gpkg

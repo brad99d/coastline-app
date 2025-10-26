@@ -8,6 +8,9 @@ import {Stat} from "@/types/stat";
 import {fetchStats} from "@/lib/api/stats";
 import BarChartCard from "@/components/BarChartCard";
 import {Sidebar} from "@/components/Sidebar";
+import {ProfileButton} from "@/components/ProfileButton";
+
+import {UserRound} from "lucide-react";
 
 export default function MapOverlay() {
     const { range } = useTimeRange();
@@ -34,6 +37,7 @@ export default function MapOverlay() {
                 <BarChartCard title={"Global Temperature"} data={filteredData} />
             </Sidebar>
             <RangeSelector />
+            <ProfileButton><UserRound /></ProfileButton>
         </div>
     )
 }
