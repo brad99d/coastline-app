@@ -36,6 +36,7 @@ export default function BarChartCard({ title, data }: { title: string; data: Sta
                 <BarChart data={chartData}>
                     <CartesianGrid strokeDasharray="1 0" vertical={false} />
                     <XAxis dataKey="year" />
+                    <YAxis domain={[0, 1.5]} tickCount={4} hide />
                     <Bar
                         type="monotone"
                         dataKey="temperature"

@@ -33,6 +33,7 @@ export default function MapOverlay() {
         <div className="map-overlay absolute top-0 bottom-0 w-full">
             <Sidebar>
                 <BarChartCard title={"Global Temperature"} data={filteredData} />
+                <BarChartCard title={"Global Sea Level"} data={filteredData} />
             </Sidebar>
             <RangeSelector />
             <ProfileButton><UserRound /></ProfileButton>
