@@ -8,7 +8,7 @@ interface DataCardProps {
 
 export function DataCard({ title, unit, children }: DataCardProps) {
     return (
-        <div className="w-full rounded-2xl p-4 bg-white drop-shadow-xl border-1 box-border">
+        <div className="w-full rounded-2xl p-4 bg-white drop-shadow-xl border-1 border-gray-50 box-border">
             <div className="font-semibold text-black">{title}</div>
             <div className="text-4xl text-black mt-2 mb-4">{unit}</div>
             <div className="h-50">{children}</div>

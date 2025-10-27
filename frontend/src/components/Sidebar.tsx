@@ -12,7 +12,7 @@ export function Sidebar({ children }: { children: React.ReactNode }) {
 
     return (
         <div className="flex flex-col gap-4 w-100 max-h-screen p-4 pb-25">
-            <div className="title text-5xl font-light">{title}</div>
+            <div className="title text-5xl font-light text-white">{title}</div>
             <div className={`
             flex flex-col gap-2 glass rounded-[22px] w-full p-2 overflow-scroll no-scrollbar transition-transform
             ${ open ? "translate-x-0" : "-translate-x-[105%]"}
@@ -20,7 +20,7 @@ export function Sidebar({ children }: { children: React.ReactNode }) {
                 {children}
             </div>
             <button onClick={() => setOpen(!open)} className={`absolute top-22 ${ open ? "left-98" : "left-3" } cursor-pointer`}>
-                { open ? <ChevronLeft/> : <ChevronRight/> }
+                { open ? <ChevronLeft className="text-white" /> : <ChevronRight className="text-white"/> }
             </button>
         </div>
     );
