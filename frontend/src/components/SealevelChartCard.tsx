@@ -8,14 +8,15 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    ResponsiveContainer, Cell,
+    ResponsiveContainer,
+    Cell,
 } from "recharts";
 import { DataCard } from "@/components/DataCard";
 import { useTimeRange } from "@/context/TimeRangeContext";
 import { Stat } from "@/types/stat";
 
 export default function SealevelChartCard({ title, unit, data }: { title: string; unit: string; data: Stat[]}) {
-    const { range } = useTimeRange();
+    const { range, playing, currentFrame } = useTimeRange();
     const singleYear = range.start === range.end;
 
     const minYear = 1980;
@@ -34,8 +35,6 @@ export default function SealevelChartCard({ title, unit, data }: { title: string
         ? filledData
         : filledData.filter((d) => d.year >= range.start && d.year <= range.end);
 
-    const highlightYear = singleYear ? range.start : null;
-
     return (
         <DataCard title={title} unit={unit}>
             <ResponsiveContainer width="100%" height="100%">
@@ -49,14 +48,20 @@ export default function SealevelChartCard({ title, unit, data }: { title: string
                         strokeWidth={2}
                         isAnimationActive={false}
                     >
-                        {chartData.map((entry) => (
-                            <Cell
+                        {chartData.map((entry) => {
+                            let fill = "hsl(0, 0%, 0%)";
+
+                            // single year
+                            if (singleYear && entry.year !== range.start) fill = "hsl(0, 0%, 70%)";
+
+                            // animation
+                            if (playing && entry.year !== currentFrame) fill = "hsl(0, 0%, 70%)";
+
+                            return <Cell
                                 key={entry.year}
-                                fill={
-                                    entry.year === highlightYear || !singleYear ? "hsl(0, 0%, 0%)" : "hsl(0, 0%, 70%)"
-                                }
+                                fill={fill}
                             />
-                        ))}
+                        })}
                     </Bar>
                 </BarChart>
             </ResponsiveContainer>

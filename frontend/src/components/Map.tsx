@@ -9,7 +9,7 @@ import { useTimeRange } from "@/context/TimeRangeContext";
 export default function Map() {
     const mapContainer = useRef<HTMLDivElement>(null);
     const map = useRef<mapboxgl.Map | null>(null);
-    const { range } = useTimeRange();
+    const { range, currentFrame, playing } = useTimeRange();
 
     useEffect(() => {
         if (map.current) return;
@@ -75,7 +75,22 @@ export default function Map() {
             [">=", ["get", "year"], range.start],
             ["<=", ["get", "year"], range.end],
         ]);
-    }, [range]);
+    }, [range, playing]);
+
+    useEffect(() => {
+        if (!map.current || !map.current.isStyleLoaded()) return;
+        const m = map.current;
+
+        if (!playing) return;
+
+        m.setFilter("coastline", ["==", ["get", "year"], currentFrame]);
+
+        m.setPaintProperty(
+            "coastline",
+            "line-color",
+            "hsl(180, 80%, 80%)"
+        )
+    }, [currentFrame, playing, range]);
 
     return <div ref={mapContainer} className="absolute top-0 left-0 w-full h-screen z-0" />;
 }

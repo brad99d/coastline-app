@@ -14,7 +14,7 @@ export default function RangeSelector({
     minYear = 1980,
     maxYear = 2030,
 }: RangeSelectorProps) {
-    const { range, setRange } = useTimeRange();
+    const { range, setRange, playing, currentFrame } = useTimeRange();
     const [dragging, setDragging] = useState<"none" | "start" | "end" | "range" | "single" | "create">("none");
     const [rangeGrabOffset, setRangeGrabOffset] = useState<number | null>(null);
     const trackRef = useRef<HTMLDivElement>(null);
@@ -111,6 +111,8 @@ export default function RangeSelector({
         };
     });
 
+    const handleFill = playing ? "bg-black" : "bg-white";
+
     return (
         <div className="glass fixed bottom-0 left-0 right-0 max-w-full bg-white rounded-[22px] m-4">
             <div className="max-w-full mx-[22px] select-none">
@@ -134,7 +136,7 @@ export default function RangeSelector({
 
                         {/* Start handle */}
                         <div
-                            className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2 cursor-grab"
+                            className={`absolute mt-2 top-1/2 w-7 h-7 ${handleFill} rounded-full border-4 border-black transform -translate-x-1/2 cursor-grab`}
                             style={{ left: `${yearToPercent(range.start)}%` }}
                             onMouseDown={(e) => onMouseDown(e, "start")}
                         ></div>
@@ -142,9 +144,17 @@ export default function RangeSelector({
                         {/* End handle */}
                         {!isSingle && (
                             <div
-                                className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2 cursor-grab"
+                                className={`absolute mt-2 top-1/2 w-7 h-7 ${handleFill} rounded-full border-4 border-black transform -translate-x-1/2 cursor-grab`}
                                 style={{ left: `${yearToPercent(range.end)}%` }}
                                 onMouseDown={(e) => onMouseDown(e, "end")}
+                            ></div>
+                        )}
+
+                        {/* Frame indicator */}
+                        {playing && (
+                            <div
+                                className="absolute mt-2 top-1/2 w-7 h-7 bg-white rounded-full border-4 border-black transform -translate-x-1/2"
+                                style={{ left: `${yearToPercent(currentFrame)}%` }}
                             ></div>
                         )}
                     </div>

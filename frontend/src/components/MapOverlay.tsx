@@ -8,6 +8,7 @@ import {fetchStats} from "@/lib/api/stats";
 import TemperatureChartCard from "@/components/TemperatureChartCard";
 import {Sidebar} from "@/components/Sidebar";
 import {ProfileButton} from "@/components/ProfileButton";
+import { PlayButton } from "@/components/PlayButton";
 
 import {UserRound} from "lucide-react";
 import SealevelChartCard from "@/components/SealevelChartCard";
@@ -52,6 +53,7 @@ export default function MapOverlay() {
                 <SealevelChartCard title={"Global Sea Level"} unit={levelUnit} data={sealevel} />
             </Sidebar>
             <RangeSelector />
+            <PlayButton />
             <ProfileButton><UserRound /></ProfileButton>
         </div>
     )
