@@ -1,16 +1,16 @@
 // context/TimeRangeContext.tsx
 
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
+import {createContext, useContext, useState, ReactNode, Dispatch} from "react";
 import { YearRange } from "../types/stat";
 
 interface TimeRangeContextType {
     range: YearRange;
     setRange: (r: YearRange) => void;
     currentFrame: number;
-    setCurrentFrame: (frame: number) => void;
+    setCurrentFrame: Dispatch<React.SetStateAction<number>>;
     playing: boolean;
-    setPlaying: (value: boolean) => void;
+    setPlaying: Dispatch<React.SetStateAction<boolean>>;
 }
 
 const TimeRangeContext = createContext<TimeRangeContextType | undefined>(undefined);

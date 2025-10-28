@@ -13,7 +13,7 @@ export function PlayButton() {
         if (intervalRef.current) clearInterval(intervalRef.current);
 
         intervalRef.current = setInterval(() => {
-            setCurrentFrame(prev => {
+            setCurrentFrame((prev: number) => {
                 const next = prev + 1;
                 return next > range.end ? range.start : next;
             });

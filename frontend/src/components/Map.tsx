@@ -2,6 +2,7 @@
 
 "use client";
 import { useEffect, useRef } from "react";
+import type { ExpressionSpecification } from "mapbox-gl";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useTimeRange } from "@/context/TimeRangeContext";
@@ -57,7 +58,7 @@ export default function Map() {
         if (!map.current || !map.current.isStyleLoaded()) return;
         const m = map.current;
 
-        const gradient =
+        const gradient: ExpressionSpecification | string =
             range.start === range.end
                 ? 'hsl(180, 80%, 80%)'
                 : [
