@@ -1,3 +1,18 @@
+# dashboard/models.py
+
 from django.db import models
 
 # Create your models here.
+class Temperature(models.Model):
+    year = models.IntegerField(unique=True)
+    temperature = models.FloatField()
+
+    def __str__(self):
+        return f"{self.year}: {self.temperature}"
+
+class SeaLevel(models.Model):
+    year = models.IntegerField(unique=True)
+    level = models.FloatField()
+
+    def __str__(self):
+        return f"{self.year}: {self.level}"

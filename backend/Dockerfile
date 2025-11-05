@@ -8,8 +8,10 @@ ENV PYTHONUNBUFFERED=1
 
 # update system
 RUN apt-get update && apt-get install -y \
-    build-essential libpq-dev curl && \
-    rm -rf /var/lib/apt/lists/*
+    build-essential libpq-dev curl
+
+# remove apt lists
+RUN rm -rf /var/lib/apt/lists/*
 
 # install python packages
 COPY requirements.txt .
@@ -22,4 +24,4 @@ COPY . .
 EXPOSE 8000
 
 # run django dev server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "app.wsgi:application", "-b", "0.0.0.0:8000"]

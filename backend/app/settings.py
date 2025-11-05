@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-liw*ml(p$#luu+5pe@3v$#oqaihhgzt%jw%6w7m9&ru)oy%gc#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "backend",
+    "api",
+]
 
 
 # Application definition
@@ -37,7 +41,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third-party
+    'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
+    # first-party
+    'dashboard',
+    'users'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,6 +68,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://frontend:3000',
+    'http://backend:8000',
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -79,6 +106,9 @@ DATABASES = {
     }
 }
 
+
+# User Model
+AUTH_USER_MODEL = 'users.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

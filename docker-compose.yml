@@ -1,5 +1,5 @@
 services:
-  backend:
+  api:
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -9,9 +9,12 @@ services:
       - ./backend:/app
     ports:
       - "8000:8000"
+    networks:
+      - webnet
     env_file:
       - .env
-  frontend:
+
+  web:
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -21,6 +24,28 @@ services:
       - /app/node_modules
     ports:
       - "3000:3000"
+    networks:
+      - webnet
     environment:
       - NODE_ENV=development
+    env_file:
+      - .env
     command: npm run dev
+
+  tileserver:
+    image: maptiler/tileserver-gl
+    container_name: tileserver
+    restart: unless-stopped
+    volumes:
+      - ./tiles:/data
+    ports:
+      - "8080:8080"
+    networks:
+      - webnet
+    command: --verbose
+
+volumes:
+  postgis_data:
+
+networks:
+  webnet:
